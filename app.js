@@ -12,6 +12,7 @@ function Place(name, lat, long) {
 	this.long = long;
 }
 
+console.log('test')
 let loc1 = new Place('bedok', 1.3236, 103.9273);
 let loc2 = new Place('Jurong', 1.3329, 103.7436);
 let loc3 = new Place('Yishun', 1.4304, 103.8354);
