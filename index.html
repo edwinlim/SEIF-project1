@@ -20,6 +20,7 @@
 			href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap"
 			rel="stylesheet"
 		/>
+
 		<title>Wala</title>
 	</head>
 
@@ -31,64 +32,184 @@
 					<div class="inner-div">
 						<h3>Little Red Riding Hood</h3>
 						<div class="profile-picture">
-							<img src="/img/red_riding_hood.jpg" alt="" class="profile-pic" />
-                        </div>
-                        <div class="row">
-                            <div class="bubble-all">Location 1</div>
-                        
-                        </div>
-                        <div class="row">
-                            <div class="bubble-all">Location 1</div>
-                        
-                        </div>
-                        <div class="row">
-                            <div class="bubble-all">Location 1</div>
-                        
-                        </div>
+							<img src="img/red_riding_hood.jpg" alt="" class="profile-pic" />
+						</div>
+
+						<div class="row">
+							<div class="col-12">
+								<ul>
+									<li
+										id="red-place"
+										draggable="true"
+										ondragover="dragOver(event)"
+										ondragstart="dragStart(event)"
+									>
+										<div id="red-location1" class="bubble-all red-route">
+											Bedok
+										</div>
+									</li>
+									<li
+										id="red-place"
+										draggable="true"
+										ondragover="dragOver(event)"
+										ondragstart="dragStart(event)"
+									>
+										<div id="red-location2" class="bubble-all red-route">
+											Tampines
+										</div>
+									</li>
+									<li
+										class="red-place"
+										draggable="true"
+										ondragover="dragOver(event)"
+										ondragstart="dragStart(event)"
+									>
+										<div id="red-location3" class="bubble-all red-route">
+											Pasir Ris
+										</div>
+									</li>
+									<li
+										class="red-place"
+										draggable="true"
+										ondragover="dragOver(event)"
+										ondragstart="dragStart(event)"
+									>
+										<div id="red-location4" class="bubble-all red-route">
+											Jurong
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+							<div class="input-group-append">
+								<button
+									id="red-plan"
+									class="btn btn-outline-secondary"
+									type="button"
+								>
+									Let's Go!
+								</button>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="col-4" id="game-info">
 					<div class="inner-div">
-						<h3>Game Information</h3>
+						<h3>Grandma</h3>
 						<div class="row">
-							<div class="col-6" id="left-area">
-								<div class="bubble-left">Start Game</div>
-							</div>
-							<div class="col-6" id="right-area">
-								<div class="bubble-right">Start Game</div>
+							<div class="col-12" id="left-area">
+								<div class="bubble-left">
+									My Momma asked me to get these fruits to my Grandma
+								</div>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-6" id="left-area">
-								<div class="bubble-left">Start Game</div>
-							</div>
-							<div class="col-6" id="right-area">
-								<div class="bubble-right">Start Game</div>
+							<div class="col-12" id="right-area">
+								<div class="bubble-right">
+									Before you
+									<p class="emphasis">get to your Grandma,</p>
+									I am going to
+									<p class="emphasis">get your Grandma.</p>
+								</div>
 							</div>
 						</div>
+
 						<div class="row" id="challenge">
-                            <div class="bubble-all">Challenge: Go and Buy Adam Road Nasi Lemak, followed by Bak Chor Mee from Fengshan market. Send it to Granda who lives in Pasir Panjang.</div>
-                        </div>
+							<div id="challenge">
+								Grandma is hungry, Recommend Red Riding Hood to get 4 of the
+								best foods in Singapore for Grandma
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="input-group mb-3 input-item">
+									<input
+										type="text"
+										class="form-control"
+										id="food-input1"
+										placeholder="Location 1"
+										aria-label="Recipient's username"
+										aria-describedby="basic-addon2"
+									/>
+									<input
+										type="text"
+										class="form-control"
+										id="food-input2"
+										placeholder="Location 2"
+										aria-label="Recipient's username"
+										aria-describedby="basic-addon2"
+									/>
+									<input
+										type="text"
+										class="form-control"
+										id="food-input3"
+										placeholder="Location 3"
+										aria-label="Recipient's username"
+										aria-describedby="basic-addon2"
+									/><input
+										type="text"
+										class="form-control"
+										id="food-input4"
+										placeholder="Location 4"
+										aria-label="Recipient's username"
+										aria-describedby="basic-addon2"
+									/>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="input-group-append">
+									<button
+										id="get-food"
+										class="btn btn-outline-secondary"
+										type="button"
+									>
+										Get it as quickly as you can,
+										<p class="emphasis">...before the wolf does.</p>
+									</button>
+								</div>
+							</div>
+						</div>
+						<div id="result-area">
+							This is the result display
+						</div>
 					</div>
 				</div>
 				<div class="col-4" id="computer-area">
 					<div class="inner-div">
 						<h3>Wolf Wolf</h3>
 						<div class="profile-picture">
-							<img src="/img/wolf.jpg" alt="" class="profile-pic" />
-                        </div>
-                        <div class="row">
-                            <div class="bubble-all">Location 1</div>
-                            
-                        </div>
-                        <div class="row">
-                            <div class="bubble-all">Location 1</div>
-                        
-                        </div>
-                        <div class="row">
-                            <div class="bubble-all">Location 1</div>
-                        
-                        </div>
+							<img src="img/wolf.jpg" alt="" class="profile-pic" />
+						</div>
+						<div class="row">
+							<div class="bubble-all" id="wolf-location1">Location 1</div>
+						</div>
+						<div class="row">
+							<div class="bubble-all" id="wolf-location2">Location 2</div>
+						</div>
+						<div class="row">
+							<div class="bubble-all" id="wolf-location3">Location 3</div>
+						</div>
+						<div class="row">
+							<div class="bubble-all" id="wolf-location4">Location 4</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+							<div class="input-group-append">
+								<button
+									id="wolf-plan"
+									class="btn btn-outline-secondary"
+									type="button"
+								>
+									Let's Go!
+								</button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -101,6 +222,8 @@
 			integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 			crossorigin="anonymous"
 		></script>
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/0.14.5/require.js"></script> -->
 		<script
 			src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
 			integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
@@ -111,5 +234,8 @@
 			integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
 			crossorigin="anonymous"
 		></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+		<script src="app.js"></script>
 	</body>
 </html>

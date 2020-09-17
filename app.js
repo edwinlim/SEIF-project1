@@ -1,44 +1,15 @@
-//*Controller*************************************
+//declare variables
 
-//1. initialise the program
-
-//*MODEL******************************************
-
-//2. GENERATE THE LOCATIONS FROM LAT LONG OF SINGAPORE
-
-function Place(name, lat, long) {
-	this.name = name;
-	this.lat = lat;
-	this.long = long;
-}
-
-console.log('test')
-let loc1 = new Place('bedok', 1.3236, 103.9273);
-let loc2 = new Place('Jurong', 1.3329, 103.7436);
-let loc3 = new Place('Yishun', 1.4304, 103.8354);
-
-let wolfArray = [loc1, loc2, loc3];
-let ridingHoodArray = [loc1, loc2, loc3];
-//4. COMPUTE DISTANCE FOR HUMAN CHOICE
-
-//5. GENERATE RANDOM CHOICE FOR WOLF
-wolfArray = shuffle(wolfArray);
-ridingHoodArray = shuffle(ridingHoodArray);
-
-//5. COMPUTE DISTANCE FOR WOLF CHOICE
-
-//6. COMPARE RESULT
-
-//*VIEWS******************************************
-
-//3. GET USER INPUT
-
-//7. DECLARE WINNER
+const api = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
+const key = '&key=AIzaSyCP1xpWlOr7AU4oXf3dRiBmDHdvcGaoUoQ';
+let ridingHoodLocationArray = [];
+let ridingHoodArray = [];
+let wolfArray = [];
 
 /***************FUNCTIONS************************************************************************/
 //make function for computing distance between 2 GPS coordinates
 
-let distance = (lat1, lon1, lat2, lon2) => {
+function distance(lat1, lon1, lat2, lon2) {
 	const R = 6371e3; // metres
 	const φ1 = (lat1 * Math.PI) / 180; // φ, λ in radians
 	const φ2 = (lat2 * Math.PI) / 180;
@@ -53,48 +24,185 @@ let distance = (lat1, lon1, lat2, lon2) => {
 	const d = R * c; // in metres
 
 	return d;
-};
-
-let distanceBetweenTwoArrayObject = (obj1, obj2) => {
-	return distance(obj1.lat, obj1.long, obj2.lat, obj2.long);
-};
-
-let totalTourDistance = (obj) => {
-	let x = 0;
-	for (i = 0; i < obj.length - 1; i++) {
-		x += distanceBetweenTwoArrayObject(obj[i], obj[i + 1]);
-	}
-
-};
-
-totalTourDistance(wolfArray);
-totalTourDistance(ridingHoodArray);
-//function for shuffling array
-
-function shuffle(array) {
-	var currentIndex = array.length,
-		temporaryValue,
-		randomIndex;
-
-	// While there remain elements to shuffle...
-	while (0 !== currentIndex) {
-		// Pick a remaining element...
-		randomIndex = Math.floor(Math.random() * currentIndex);
-		currentIndex -= 1;
-
-		// And swap it with the current element.
-		temporaryValue = array[currentIndex];
-		array[currentIndex] = array[randomIndex];
-		array[randomIndex] = temporaryValue;
-	}
-
-	return array;
 }
 
+function distanceBetweenTwoArrayObject(obj1, obj2) {
+	return distance(obj1.lat, obj1.long, obj2.lat, obj2.long);
+}
+
+function totalTourDistance(arrObj) {
+	let x = 0;
+
+	for (i = 0; i < arrObj.length - 1; i++) {
+		x += distanceBetweenTwoArrayObject(arrObj[i], arrObj[i + 1]);
+	}
+	return x;
+}
+
+function compare_sort(arrObj) {
+	for (i = 0; i < arrObj.length; i++) {
+		let j = i;
+		while (j < arrObj.length - 2) {
+			let a = distanceBetweenTwoArrayObject(arrObj[j], arrObj[j + 1]);
+			let b = distanceBetweenTwoArrayObject(arrObj[j], arrObj[j + 2]);
+			if (a > b) {
+				[arrObj[j + 1], arrObj[j + 2]] = [arrObj[j + 2], arrObj[j + 1]];
+			}
+			j++;
+		}
+	}
+}
+
+//*Controller*************************************
+
+//1. initialise the program
+
+//*MODEL******************************************
+
+//2. GENERATE THE LOCATIONS FROM LAT LONG OF SINGAPORE
+
+function Place(name, lat, long) {
+	this.name = name;
+	this.lat = lat;
+	this.long = long;
+}
+
+let wolfScore = 0;
+let ridingHoodScore = 0;
+
+//3. GET USER INPUT && PUSH TO LABELS ON RIDING HOOD PANEL
+
+document.querySelector('#get-food').addEventListener('click', function() {
+	let x = document.getElementById('food-input1').value;
+	document.getElementById('red-location1').innerText = x;
+
+	x = document.getElementById('food-input2').value;
+	document.getElementById('red-location2').innerText = x;
+
+	x = document.getElementById('food-input3').value;
+	document.getElementById('red-location3').innerText = x;
+
+	x = document.getElementById('food-input4').value;
+	document.getElementById('red-location4').innerText = x;
+});
+//4. COMPUTE DISTANCE FOR RED RIDING HOOD'S ROUTE
+document.getElementById('red-plan').addEventListener('click', function(e) {
+	e.preventDefault();
+
+	let red_route = document.getElementsByClassName('red-route');
+	for (i = 0; i < red_route.length; i++) {
+		ridingHoodLocationArray[i] = red_route[i].innerText;
+	}
+
+	ridingHoodLocationArray.forEach((element, index) => {
+		let url = api + element + key;
+		url = encodeURI(url);
+		axios
+			.get(url)
+			.then(function(response) {
+				ridingHoodArray[index] = new Place(
+					element,
+					response.data.results[0].geometry.location.lat,
+					response.data.results[0].geometry.location.lng
+				);
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
+	});
+
+	ridingHoodScore = totalTourDistance(ridingHoodArray);
+	console.log(ridingHoodArray);
+	console.log(ridingHoodScore);
+	wolfArray = ridingHoodArray;
+});
+
+document.getElementById('wolf-plan').addEventListener('click', function() {
+	if (wolfArray === []) {
+		alert('Ladies first');
+	} else {
+		//5. GENERATE OPTIMUM CHOICE FOR WOLF
+
+		compare_sort(wolfArray);
+
+		//5. COMPUTE DISTANCE FOR WOLF CHOICE
+
+		wolfScore = totalTourDistance(wolfArray);
+
+		//6. COMPARE RESULT
+
+		if (ridingHoodScore > wolfScore) {
+			fairyTaleEnding = true;
+		} else if (ridingHoodScore < wolfScore) {
+			fairyTaleEnding = false;
+		} else {
+			fairyTaleEnding = 'null';
+		}
+
+		displayResult(fairyTaleEnding);
+	}
+});
+
+//*VIEWS******************************************
+var _el;
+
+function dragOver(e) {
+	if (isBefore(_el, e.target)) e.target.parentNode.insertBefore(_el, e.target);
+	else e.target.parentNode.insertBefore(_el, e.target.nextSibling);
+}
+
+function dragStart(e) {
+	e.dataTransfer.effectAllowed = 'move';
+	e.dataTransfer.setData('text/plain', null); // Thanks to bqlou for their comment.
+	_el = e.target;
+}
+
+function isBefore(el1, el2) {
+	if (el2.parentNode === el1.parentNode)
+		for (
+			var cur = el1.previousSibling;
+			cur && cur.nodeType !== 9;
+			cur = cur.previousSibling
+		)
+			if (cur === el2) return true;
+	return false;
+}
+//7. DECLARE WINNER
+
+function displayResult(fairyTaleEnding) {
+	if (fairyTaleEnding) {
+		let message = `Little Red Riding Hood beats the wolf to Grandma`;
+	} else if (!fairyTaleEnding) {
+		let message = `The wolf arrives ahead of Little Red Riding Hood, eats up Grandma, and the rest is history.`;
+	}
+
+	document.getElementById('result-area').innerText = message;
+}
+//function for shuffling array
+
+// f
 //function to compute total distance
 
-let totalDistance = (arr) => {
-	for (i = 0; i < arr.length; i++) {}
-};
-
 /***************FUNCTIONS************************************************************************/
+
+//rubbish
+
+//Function shuffle(array) {
+// 	var currentIndex = array.length,
+// 		temporaryValue,
+// 		randomIndex;
+
+// 	// While there remain elements to shuffle...
+// 	while (0 !== currentIndex) {
+// 		// Pick a remaining element...
+// 		randomIndex = Math.floor(Math.random() * currentIndex);
+// 		currentIndex -= 1;
+
+// 		// And swap it with the current element.
+// 		temporaryValue = array[currentIndex];
+// 		array[currentIndex] = array[randomIndex];
+// 		array[randomIndex] = temporaryValue;
+// 	}
+
+// 	return array;
+// }
