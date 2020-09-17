@@ -133,6 +133,10 @@ h3 {
 	margin-top: -10px;
 }
 
+#red-go-button {
+	font-family: 'Quicksand';
+	font-size: 30px;
+}
 .bubble-all {
 	position: relative;
 	background: rgb(131, 25, 31);
@@ -149,6 +153,34 @@ h3 {
 	justify-content: center;
 	align-items: center;
 	margin-top: 15px;
+}
+#wolf-plan {
+	font-family: 'Quicksand';
+	font-size: 30px;
+	background: red;
+}
+#result-area {
+	background-color: white;
+	height: 250px;
+}
+#result-text {
+	font-family: 'Quicksand';
+	font-size: 30px;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	padding: 5px;
+	margin: 30px;
+	padding: 20px;
+}
+#wolf-go-button {
+	text-decoration: line-through;
+	text-align: center;
+	justify-content: center;
+	margin: auto;
+	position: relative;
+	font-family: 'Quicksand';
+	font-size: 30px;
 }
 #result-area {
 	font-family: 'Quicksand';
@@ -177,6 +209,7 @@ h3 {
 #red-plan {
 	position: relative;
 	background-color: red;
+	font-size: 30px;
 }
 
 .btn {
@@ -233,4 +266,5 @@ ul {
 
 #get-food {
 	background-color: red;
+	font-size: 30px;
 }

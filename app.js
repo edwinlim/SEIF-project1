@@ -1,7 +1,7 @@
 //declare variables
 
 const api = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
-const key = '&key=AIzaSyCP1xpWlOr7AU4oXf3dRiBmDHdvcGaoUoQ';
+const key = '&key=AIzaSyCLizIMWsnndbOO1otEWtbnQ-W6e9HRexo';
 let ridingHoodLocationArray = [];
 let ridingHoodArray = [];
 let wolfArray = [];
@@ -93,7 +93,7 @@ document.getElementById('red-plan').addEventListener('click', function(e) {
 	for (i = 0; i < red_route.length; i++) {
 		ridingHoodLocationArray[i] = red_route[i].innerText;
 	}
-
+	ridingHoodArray = [];
 	ridingHoodLocationArray.forEach((element, index) => {
 		let url = api + element + key;
 		url = encodeURI(url);
@@ -105,16 +105,16 @@ document.getElementById('red-plan').addEventListener('click', function(e) {
 					response.data.results[0].geometry.location.lat,
 					response.data.results[0].geometry.location.lng
 				);
+				console.log(ridingHoodArray);
 			})
 			.catch(function(error) {
 				console.log(error);
 			});
 	});
-
-	ridingHoodScore = totalTourDistance(ridingHoodArray);
-	console.log(ridingHoodArray);
-	console.log(ridingHoodScore);
-	wolfArray = ridingHoodArray;
+	setTimeout(function() {
+		ridingHoodScore = totalTourDistance(ridingHoodArray) / 1000;
+		wolfArray = ridingHoodArray;
+	}, 1500);
 });
 
 document.getElementById('wolf-plan').addEventListener('click', function() {
@@ -124,16 +124,19 @@ document.getElementById('wolf-plan').addEventListener('click', function() {
 		//5. GENERATE OPTIMUM CHOICE FOR WOLF
 
 		compare_sort(wolfArray);
-
+		document.getElementById('wolf-location1').innerText = wolfArray[0].name;
+		document.getElementById('wolf-location2').innerText = wolfArray[1].name;
+		document.getElementById('wolf-location3').innerText = wolfArray[2].name;
+		document.getElementById('wolf-location4').innerText = wolfArray[3].name;
 		//5. COMPUTE DISTANCE FOR WOLF CHOICE
 
-		wolfScore = totalTourDistance(wolfArray);
+		wolfScore = totalTourDistance(wolfArray) / 1000;
 
 		//6. COMPARE RESULT
 
-		if (ridingHoodScore > wolfScore) {
+		if (ridingHoodScore < wolfScore) {
 			fairyTaleEnding = true;
-		} else if (ridingHoodScore < wolfScore) {
+		} else if (ridingHoodScore > wolfScore) {
 			fairyTaleEnding = false;
 		} else {
 			fairyTaleEnding = 'null';
@@ -170,17 +173,25 @@ function isBefore(el1, el2) {
 //7. DECLARE WINNER
 
 function displayResult(fairyTaleEnding) {
+	let message = '';
 	if (fairyTaleEnding) {
-		let message = `Little Red Riding Hood beats the wolf to Grandma`;
+		message = `Little Red Riding Hood beats the wolf to Grandma by traveling ${Math.round(
+			ridingHoodScore
+		)}km compared to the wolf's ${Math.round(wolfScore)}km`;
 	} else if (!fairyTaleEnding) {
-		let message = `The wolf arrives ahead of Little Red Riding Hood, eats up Grandma, and the rest is history.`;
+		message = `The wolf arrives ahead of Little Red Riding Hood covering ${Math.round(
+			wolfScore
+		)}km compared to Red Riding Hood's ${Math.round(
+			ridingHoodScore
+		)}, eats up Grandma, and the rest is history.`;
+	} else {
+		message = `They both arrive at the same time, but ... that's not enough to save Grandma.`;
 	}
 
-	document.getElementById('result-area').innerText = message;
+	document.getElementById('result-text').innerText = message;
 }
 //function for shuffling array
 
-// f
 //function to compute total distance
 
 /***************FUNCTIONS************************************************************************/
