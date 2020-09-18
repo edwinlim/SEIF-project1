@@ -67,9 +67,6 @@ function Place(name, lat, long) {
 	this.long = long;
 }
 
-let wolfScore = 0;
-let ridingHoodScore = 0;
-
 //3. GET USER INPUT && PUSH TO LABELS ON RIDING HOOD PANEL
 
 document.querySelector('#get-food').addEventListener('click', function() {
@@ -84,6 +81,11 @@ document.querySelector('#get-food').addEventListener('click', function() {
 
 	x = document.getElementById('food-input4').value;
 	document.getElementById('red-location4').innerText = x;
+
+	this.classList.remove('blink');
+	document.getElementsByClassName('challenge').classList.remove('blink');
+	document.getElementById('wolf-plan').classList.remove('blink');
+	document.getElementById('red-plan').classList.add('blink');
 });
 //4. COMPUTE DISTANCE FOR RED RIDING HOOD'S ROUTE
 document.getElementById('red-plan').addEventListener('click', function(e) {
@@ -115,6 +117,9 @@ document.getElementById('red-plan').addEventListener('click', function(e) {
 		ridingHoodScore = totalTourDistance(ridingHoodArray) / 1000;
 		wolfArray = ridingHoodArray;
 	}, 1500);
+
+	this.classList.remove('blink');
+	document.getElementById('wolf-plan').classList.add('blink');
 });
 
 document.getElementById('wolf-plan').addEventListener('click', function() {

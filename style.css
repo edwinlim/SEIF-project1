@@ -188,7 +188,7 @@ h3 {
 	text-align: center;
 	justify-content: center;
 }
-#challenge {
+.challenge {
 	position: relative;
 	background: rgb(33, 196, 133);
 	color: #ffffff;
@@ -267,4 +267,19 @@ ul {
 #get-food {
 	background-color: red;
 	font-size: 30px;
+}
+
+@keyframes blinking {
+  0%{
+    background-color: #ff3d50;
+    color: #ddd;
+  }
+  100%{
+    background-color: #222291;
+    color: #fff;
+  }
+}
+.blink{
+  /* NAME | TIME | ITERATION */
+  animation: blinking 1s infinite;
 }
