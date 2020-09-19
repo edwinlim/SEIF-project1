@@ -90,7 +90,7 @@ document.querySelector('#get-food').addEventListener('click', function() {
 //4. COMPUTE DISTANCE FOR RED RIDING HOOD'S ROUTE
 document.getElementById('red-plan').addEventListener('click', function(e) {
 	e.preventDefault();
-
+	document.getElementById('wolf-plan').classList.add('blink');
 	let red_route = document.getElementsByClassName('red-route');
 	for (i = 0; i < red_route.length; i++) {
 		ridingHoodLocationArray[i] = red_route[i].innerText;
@@ -188,7 +188,7 @@ function displayResult(fairyTaleEnding) {
 			wolfScore
 		)}km compared to Red Riding Hood's ${Math.round(
 			ridingHoodScore
-		)}, eats up Grandma, and the rest is history.`;
+		)}km. He eats up Grandma, and the rest is history.`;
 	} else {
 		message = `They both arrive at the same time, but ... that's not enough to save Grandma.`;
 	}
